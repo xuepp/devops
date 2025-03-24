@@ -1,0 +1,99 @@
+
+services:
+  # 新增 Node Exporter 服务
+  node-exporter:
+    image: prom/node-exporter:v1.6.1
+    container_name: node-exporter
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - "9100:9100"  # 显式声明端口映射
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+    networks:
+      - monitoring  # 与 Prometheus 共享网络
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - monitoring
+    depends_on:
+      - node-exporter  # 确保先启动 Node Exporter
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+    ports:
+      - "9093:9093"
+    restart: always
+    networks:
+      - monitoring
+
+  prometheus-msteams:
+    image: quay.io/prometheusmsteams/prometheus-msteams:latest
+    container_name: prometheus-msteams
+    environment:
+      - TEAMS_INCOMING_WEBHOOK_URL=https://digitaltechedge.webhook.office.com/webhookb2/d4466c1c-e69f-41ee-ab79-24bb4fc9090d@9b415834-803a-4da0-afdc-fe6b1d52d649/IncomingWebhook/b4b11903b2634ad3bfbee7bfdf1589c1/db52f3a5-83cc-471b-8ca9-08f17317b916/V2Svz_S21x5kPFFbN-v5emaoWV8qwJYQazMVSH8HOscK01
+      - TEAMS_REQUEST_URI=alertmanager
+    ports:
+      - "2000:2000"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+
+  mysqld_exporter:
+    image: prom/mysqld-exporter
+    container_name: mysqld_exporter
+    restart: always
+    volumes:
+      - ./my.cnf:/.my.cnf
+    ports:
+      - "9104:9104"
+    #environment:
+      #- DATA_SOURCE_NAME=xpp:123456@(mysql:3306)/
+    networks:
+      - mysql_mysql_network
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  mysql_mysql_network:
+    external: true  # 让它加入 MySQL 的网络
+
+  monitoring:
+    driver: bridge

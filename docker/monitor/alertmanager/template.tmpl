@@ -1,0 +1,21 @@
+{{ define "teams.default" }}
+{
+  "@type": "MessageCard",
+  "@context": "http://schema.org/extensions",
+  "themeColor": "{{ if eq .Status \"firing\" }}FF0000{{ else }}00FF00{{ end }}",
+  "title": "{{ .CommonLabels.alertname }}",
+  "text": "**状态**: {{ .Status }}<br/>**严重性**: {{ .CommonLabels.severity }}<br/>**摘要**: {{ .CommonAnnotations.summary }}",
+  "sections": [{
+    "facts": [
+      {
+        "name": "触发时间",
+        "value": "{{ (.StartsAt | time.Parse \"2006-01-02T15:04:05Z07:00\").Local.Format \"2006-01-02 15:04:05\" }}"
+      },
+      {
+        "name": "故障主机",
+        "value": "{{ .CommonLabels.instance }}"
+      }
+    ]
+  }]
+}
+{{ end }}

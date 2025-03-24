@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  # MySQL 服务
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 159a357B  # 替换为安全的 root 密码
+      MYSQL_DATABASE: example_db
+      MYSQL_USER: xpp
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # 初始化监控用户
+    ports:
+      - "3306:3306"
+    networks:
+      - monitoring_network
+    restart: unless-stopped
+
+  # MySQL Exporter（监控数据采集）
+  mysqld_exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysqld_exporter
+    #volumes:
+      #- ./my.cnf:/.my.cnf
+    environment:
+      - DATA_SOURCE_NAME=root:159a357B@(mysql:3306)/ # 连接 MySQL 的用户信息
+    ports:
+      - "9104:9104"  # 默认监控端口
+    networks:
+      - monitoring_network
+    restart: unless-stopped
+    depends_on:
+      - mysql
+
+# 自定义网络确保容器互通
+networks:
+  monitoring_network:
+    driver: bridge
