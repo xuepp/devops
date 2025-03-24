@@ -1,0 +1,11 @@
+commit aa4ab74ae6ec46ed56c0dde5fbb5a7068abb4856
+tree e59d6863c754b865b378fdbb54d1e901d5535477
+parent a11f0b4722480fd820a416f3c2e4218aa8c37640
+author xpp <panpan.xue@centific.com> 2025-03-24 11:51:05 +0800
+committer xpp <panpan.xue@centific.com> 2025-03-24 11:51:05 +0800
+
+    update
+
+
+:100644 100644 85679a4cd4bcc9c2482f802593d4894f6db2dbd3 41cee7640cef49b6a6707dc581edf40b697e64e6 M	vue-demo/Jenkinsfile
+:100644 100644 8eeef1c1d8b3f72105964f477ce41ccc502a1f7f e30c8d942220fc79eee8fea423274e215339ef10 M	vue-demo/src/components/Counter.vue

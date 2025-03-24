@@ -1,0 +1,23 @@
+#username: root password: 1qaz@WSX
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest  # 社区版镜像
+    container_name: gitlab
+    hostname: 'localhost'   # 修改为您的域名或IP
+    restart: always
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost'  # 与hostname一致
+        # 可选配置（取消注释按需修改）
+        # gitlab_rails['gitlab_shell_ssh_port'] = 2222
+        # nginx['listen_port'] = 8080
+        gitlab_rails['time_zone'] = 'Asia/Shanghai'
+        gitlab_rails['smtp_enable'] = false
+    volumes:
+      - ./config:/etc/gitlab
+      - ./logs:/var/log/gitlab
+      - ./data:/var/opt/gitlab
+    ports:
+      - "80:80"
+      - "443:443"
+      - "22:22"  # 如果宿主机SSH端口冲突，可改为 "2222:22"

@@ -1,0 +1,11 @@
+commit 2148a7af3b1ffece4244458f4f4917dfa72f2e23
+tree 7c01952f0c03ddad5506150ae8e6a5b000a08df8
+parent c9d6e26a5ec96f4c8bffc31054cfc2f9d715c639
+author xpp <panpan.xue@centific.com> 2025-03-24 13:30:36 +0800
+committer xpp <panpan.xue@centific.com> 2025-03-24 13:30:36 +0800
+
+    update
+
+
+:100644 100644 fce381aaaaf09bf193673b37a6c146dfae926cd9 24c41a76920a52a7b21a77eb413fab6e65fca4b8 M	vue-demo/Jenkinsfile
+:100644 100644 5f4c8bc33d2e5ebc641bc9e0738bd404f4908f85 93b9b7481961cd74ae8004211f43c1c2d9139cca M	vue-demo/dockerfile

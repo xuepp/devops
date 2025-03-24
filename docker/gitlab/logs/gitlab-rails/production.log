@@ -1,0 +1,6 @@
+  Rendered layout layouts/mailer/devise.html.haml (Duration: 61.6ms | Allocations: 27677)
+Delivered mail 67dbd684bddd5_3507f2d895780@localhost.mail (12.7ms)
+  Rendered layout layouts/mailer/devise.html.haml (Duration: 2.8ms | Allocations: 882)
+Delivered mail 67dbd699319de_3507f1c095967@localhost.mail (3.7ms)
+  Rendered layout layouts/mailer/devise.html.haml (Duration: 4.1ms | Allocations: 889)
+Delivered mail 67dbd6b31f7d1_3507f2c496191@localhost.mail (3.1ms)

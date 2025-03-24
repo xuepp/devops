@@ -1,0 +1,10 @@
+commit a9e2ca77208a61005ac0cfe0d79e73c16a7790b8
+tree e823f0d432bdaee377001d1faffd02957b4c57a7
+parent ea773c76704a6bdc722b832843f643ebb482fa52
+author xpp <panpan.xue@centific.com> 2025-03-24 12:50:14 +0800
+committer xpp <panpan.xue@centific.com> 2025-03-24 12:50:14 +0800
+
+    update
+
+
+:100644 100644 adc1d719675a2d2d5e6ea5f7c96e14bc686e463a 5b763822754c9aa8165a9c76a67aa8e50a9a6812 M	vue-demo/dockerfile

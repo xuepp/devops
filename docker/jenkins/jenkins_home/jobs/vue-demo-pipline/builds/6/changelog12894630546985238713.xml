@@ -1,0 +1,10 @@
+commit 77f94ff7325dae385b61610771ac725923cfeaa0
+tree e398ea5827a00fe7df074097d6f5542fc5b28fb8
+parent cce68b64e3b5b07638e205969306925f63e4876e
+author xpp <panpan.xue@centific.com> 2025-03-24 12:42:50 +0800
+committer xpp <panpan.xue@centific.com> 2025-03-24 12:42:50 +0800
+
+    update
+
+
+:100644 100644 b0fc5cf8d75a968141a0341ca2b4b1b1d9abb91a fce381aaaaf09bf193673b37a6c146dfae926cd9 M	vue-demo/Jenkinsfile

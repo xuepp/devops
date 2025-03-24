@@ -1,0 +1,125 @@
+Started by user [8mha:////4PH/LjdFzZeJpR6Ti8QtWwLLGhj2xXedkxeZK3sSa+DcAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9xJTczDwAj6GcLcAAAAA=[0madmin
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/vue-demo
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/xuepp/jenkins_demo.git
+ > git init /var/jenkins_home/workspace/vue-demo # timeout=10
+Fetching upstream changes from https://github.com/xuepp/jenkins_demo.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.5'
+ > git fetch --tags --force --progress -- https://github.com/xuepp/jenkins_demo.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/xuepp/jenkins_demo.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision aa4ab74ae6ec46ed56c0dde5fbb5a7068abb4856 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f aa4ab74ae6ec46ed56c0dde5fbb5a7068abb4856 # timeout=10
+Commit message: "update"
+First time build. Skipping changelog.
+[vue-demo] $ /bin/sh -xe /tmp/jenkins15544106632798208501.sh
++ cd vue-demo
++ docker build -t vuedemo:latest .
+#1 [internal] load build definition from Dockerfile
+#1 sha256:9b858565c512d9b549a659fe6edaa13f28361dcbab234b6a4a4b2111daac53a5
+#1 transferring dockerfile: 412B done
+#1 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18-alpine
+#3 sha256:fb90574236a0a1e8fa4d18b0da9ea146d2e7739e0b128b5c0407af25bc742abc
+#3 DONE 2.6s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 sha256:061e1952987e6448a170f50cfa273a095fbeeca7d83eedc8e5f175b65942a09f
+#2 DONE 2.6s
+
+#4 [internal] load .dockerignore
+#4 sha256:876a62e86c4069571d8f51e561b743cc820c2a6f9b23583da7f9194d8629adfc
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#13 [builder 1/6] FROM docker.io/library/node:18-alpine@sha256:e0340f26173b41066d68e3fe9bfbdb6571ab3cad0a4272919a52e36f4ae56925
+#13 sha256:509a2be986b6844696a9bf22d6fdbd6d4bd463d7c17b085e2bb66c156755a759
+#13 DONE 0.0s
+
+#14 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:4ff102c5d78d254a6f0da062b3cf39eaf07f01eec0927fd21e219d0af8bc0591
+#14 sha256:72890fa374a70c5f6d3f9328877f94218cbf695311b33228a4b7a7e9e45e933d
+#14 DONE 0.0s
+
+#11 [internal] load build context
+#11 sha256:239b9f85de6dbe7fb1efe7c5fb4339d96dec327d84ad141b0876b5bb7ee03bf5
+#11 transferring context: 118.48kB 0.0s done
+#11 DONE 0.0s
+
+#12 [builder 2/6] WORKDIR /app
+#12 sha256:e3a146a4688c7a4b3113b3af3e3b60f3864a8f7e84ae6c3e6b43cb71ba6da5d0
+#12 CACHED
+
+#10 [builder 3/6] COPY package*.json ./
+#10 sha256:c7927a3f0001ded8cd8c578d2ef9f3896103a7ac1341d5b2eb5013987b7a382e
+#10 CACHED
+
+#9 [builder 4/6] RUN npm install
+#9 sha256:1796567798c376cad2e75ea3dffbaeb6c1d5398c86878a43afd98237def2c57c
+#9 CACHED
+
+#8 [builder 5/6] COPY . .
+#8 sha256:dcdad541c1fdacba7c056cf737d84f0635fbd20bed89b3a3f9cc271d647ee021
+#8 DONE 0.0s
+
+#7 [builder 6/6] RUN npm run build
+#7 sha256:825a59bf42ebd754be891cad2faaaeaee3fcb26e8d4babe60cf27a2b7678d2bf
+#7 0.656 
+#7 0.656 > vue-demo@0.0.0 build
+#7 0.656 > vite build
+#7 0.656 
+#7 1.425 vite v6.2.2 building for production...
+#7 1.486 transforming...
+#7 2.004 ✓ 12 modules transformed.
+#7 2.076 rendering chunks...
+#7 2.081 computing gzip size...
+#7 2.089 dist/index.html                  0.43 kB │ gzip:  0.28 kB
+#7 2.089 dist/assets/index-Dtc-s2XD.css   0.15 kB │ gzip:  0.13 kB
+#7 2.089 dist/assets/index-BnzEFP6D.js   59.21 kB │ gzip: 23.87 kB
+#7 2.090 ✓ built in 638ms
+#7 DONE 2.1s
+
+#14 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:4ff102c5d78d254a6f0da062b3cf39eaf07f01eec0927fd21e219d0af8bc0591
+#14 sha256:72890fa374a70c5f6d3f9328877f94218cbf695311b33228a4b7a7e9e45e933d
+#14 CACHED
+
+#6 [stage-1 2/3] COPY --from=builder /app/dist /usr/share/nginx/html
+#6 sha256:28644cf8773e6dba734398099f1fac5fa290cb655b3f25119e3676ae4909dd5b
+#6 DONE 0.0s
+
+#5 [stage-1 3/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#5 sha256:87295976d9dbd14431e850790d24826246b1ccb69f191aaaaeabf53ea1916339
+#5 DONE 0.0s
+
+#15 exporting to image
+#15 sha256:9d79929f8bff0ee7a7c8f3e3786f00778e8aff6843096e6031da11b1cd2b55c3
+#15 exporting layers 0.0s done
+#15 writing image sha256:202029c8ba000e76a14769de24ca38c2a58b8c0cc6cd8ae807afebbe15846091 done
+#15 naming to docker.io/library/vuedemo:latest done
+#15 DONE 0.1s
++ docker stop vuedemo
+vuedemo
++ docker rm vuedemo
+vuedemo
++ docker run -d --name vuedemo -p 80:80 vuedemo:latest
+92bf8a167a75ac721dfd1c1679541cbff234e8795e9eea44fb94490885c57e74
++ docker ps -a
+CONTAINER ID   IMAGE                                                 COMMAND                  CREATED                  STATUS                     PORTS                                              NAMES
+92bf8a167a75   vuedemo:latest                                        "/docker-entrypoint.…"   Less than a second ago   Up Less than a second      0.0.0.0:80->80/tcp                                 vuedemo
+6e6bc4a4cc37   jenkins/jenkins:lts-jdk17                             "sh -c ' apt-get upd…"   30 minutes ago           Up 30 minutes              0.0.0.0:8080->8080/tcp, 0.0.0.0:50000->50000/tcp   jenkins
+1f0e8c9aae91   grafana/grafana:latest                                "/run.sh"                3 days ago               Up 2 hours                 0.0.0.0:3000->3000/tcp                             grafana
+66beb21e37a4   prom/prometheus:latest                                "/bin/prometheus --c…"   3 days ago               Exited (127) 2 hours ago   0.0.0.0:9090->9090/tcp                             prometheus
+1ee3cdc9b8a7   prom/mysqld-exporter                                  "/bin/mysqld_exporter"   3 days ago               Exited (127) 2 hours ago   0.0.0.0:9104->9104/tcp                             mysqld_exporter
+94c03beb8752   prom/node-exporter:v1.6.1                             "/bin/node_exporter …"   3 days ago               Up 2 hours                 0.0.0.0:9100->9100/tcp                             node-exporter
+38d8caa8893d   prom/alertmanager:latest                              "/bin/alertmanager -…"   3 days ago               Exited (127) 2 hours ago   0.0.0.0:9093->9093/tcp                             alertmanager
+10797f268d88   quay.io/prometheusmsteams/prometheus-msteams:latest   "/promteams"             3 days ago               Exited (255) 3 days ago    0.0.0.0:2000->2000/tcp                             prometheus-msteams
+6fea7e082f75   mysql:8.0                                             "docker-entrypoint.s…"   5 days ago               Up 2 hours                 33060/tcp, 0.0.0.0:3307->3306/tcp                  mysql
+Finished: SUCCESS
