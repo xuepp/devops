@@ -15,7 +15,7 @@ dist/
 
 # 忽略测试结果
 coverage/
-
+aks/php-nginx/
 docker/mysql/mysql_data
 docker/gitlab/data
 docker/jenkins/jenkins_home
