@@ -20,4 +20,3 @@ aks/php-nginx/
 docker/mysql/mysql_data
 docker/gitlab/data
 docker/jenkins/jenkins_home
-k8s/yml/php-nginx/config
