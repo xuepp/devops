@@ -1,0 +1,53 @@
+FROM php:7.4-fpm
+
+USER root
+WORKDIR /src/
+
+# 安装依赖和扩展
+RUN apt-get update -y && \
+    apt-get install -y build-essential locales zip procps exiftool openssl \
+    pkg-config busybox net-tools jpegoptim optipng pngquant gifsicle vim \
+    unzip git curl libonig-dev libzip-dev libcurl4-openssl-dev libwebp-dev \
+    libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev libldap2-dev && \
+    pecl install -o -f redis && \
+    docker-php-ext-install mysqli mbstring zip exif pcntl curl pdo_mysql ldap && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini && \
+    pecl clear-cache
+
+# 安装 Composer
+RUN curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/ && \
+    ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
+# 安装指定版本的 Nginx 1.27.x
+RUN apt-get update && \
+    apt-get install -y gnupg2 lsb-release && \
+    echo "deb http://nginx.org/packages/mainline/debian/ $(lsb_release -c | awk '{print $2}') nginx" > /etc/apt/sources.list.d/nginx.list && \
+    curl -fsSL https://nginx.org/keys/nginx_signing.key | tee /etc/apt/trusted.gpg.d/nginx.asc && \
+    apt-get update && \
+    apt-get install -y nginx=1.27.* && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# 设置 PHP 配置和应用日志
+COPY config/php.ini /usr/local/etc/php/php.ini
+COPY config/www.conf /usr/local/etc/php-fpm.d/
+# 设置nginx配置
+COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config/conf.d/my.oneforma.com.conf /etc/nginx/conf.d
+#COPY config/ssl /etc/nginx/ssl
+COPY PactformaID /var/www/PactformaID
+
+
+# 可选：为方便设置别名
+RUN echo "alias ll=\"ls -an\"" >> ~/.bashrc
+
+# 暴露 PHP-FPM 和 Nginx 所需的端口
+EXPOSE 80
+
+# 启动 Nginx 和 PHP-FPM
+CMD ["sh", "-c", "service nginx start && php-fpm"]

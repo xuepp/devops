@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-nginx
+  namespace: demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php-nginx
+  template:
+    metadata:
+      labels:
+        app: php-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: oneforma.azurecr.io/php-nginx:latest # 使用你推送的镜像
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-nginx
+  namespace: demo
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  selector:
+    app: php-nginx
+  ports:
+    - name: http  
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+

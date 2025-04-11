@@ -1,0 +1,101 @@
+   server {
+
+    listen 80;
+    listen 443 ssl;
+    server_name jobs.oneforma.com;
+    ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+    ssl_certificate /etc/nginx/ssl/certificate.crt;
+    ssl_certificate_key /etc/nginx/ssl/private.key;
+    ssl_prefer_server_ciphers on;
+    root /var/www/code/Recruit;
+    index index.html index.htm index.php;
+    add_header X-Frame-Options SAMEORIGIN;
+    if ($server_port = 80) {
+        rewrite ^(.*)$ https://$host$1 permanent;
+      }
+        location / { 
+                # enable search for precompressed files ending in .gz 
+                # nginx needs to be complied using ?-with-http_gzip_static_module 
+                # for this to work, comment out if using nginx from aptitude 
+                gzip_static on; 
+ 
+# if the requested file exists, return it immediately 
+                if (-f $request_filename) { 
+                        break; 
+                } 
+ 
+set $supercache_file ''; 
+                set $supercache_uri $request_uri; 
+ 
+if ($request_method = POST) { 
+                        set $supercache_uri ''; 
+                } 
+ 
+# Using pretty permalinks, so bypass the cache for any query string 
+                if ($query_string) { 
+                        set $supercache_uri ''; 
+                } 
+ 
+if ($http_cookie ~* "comment_author_|wordpress|wp-postpass_" ) { 
+                        set $supercache_uri ''; 
+                } 
+ 
+# !!!! IMPORTANT 
+                # if we haven't bypassed the cache, specify our supercache file 
+                if ($supercache_uri ~ ^(.+)$) { 
+                        set $supercache_file /wp-content/cache/supercache/$http_host/$1/index.html; 
+                } 
+ 
+# only rewrite to the supercache file if it actually exists 
+                if (-f $document_root$supercache_file) { 
+                        rewrite ^(.*)$ $supercache_file break; 
+                } 
+ 
+# all other requests go to Wordpress 
+                if (!-e $request_filename) { 
+                        rewrite ^(.*)$ /index.php?q=$1 last; 
+                }
+ 
+}     
+
+    location ~ /\.env { deny all; }
+
+    location ~ /(composer.lock|composer.json) {
+        deny all;
+    }
+
+
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|svg|map|woff|woff2|ttf)$ {
+       expires      30d;
+       error_log off;
+       access_log /dev/null;
+    }
+
+    location ~ .*\.(js|css)?$ {
+       expires      12h;
+       error_log off;
+       access_log /dev/null;
+    }
+
+       location ~ ^/wp-json/ {
+            rewrite ^/wp-json/(.*?)$ /?rest_route=/$1 last;
+        }
+
+
+
+    location ~ (/|\.php)$ {
+       fastcgi_pass 127.0.0.1:9000;
+       fastcgi_index index.php;
+       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+       include fastcgi_params;
+    }
+
+    location ~ $ {
+       fastcgi_pass 127.0.0.1:9000;
+       fastcgi_index index.php;
+       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name.php;
+       include fastcgi_params;
+    }
+    #access_log /var/www/log/nginx/jobs.oneforma.com/access.log main;
+    #error_log /var/www/log/nginx/jobs.oneforma.com/error.log;
+}
