@@ -1,4 +1,4 @@
-.gitignore
+
 # 忽略 Node.js 依赖
 node_modules/
 
@@ -20,4 +20,4 @@ aks/php-nginx/
 docker/mysql/mysql_data
 docker/gitlab/data
 docker/jenkins/jenkins_home
-k8s/helm/harbor/values.yaml
+k8s/yml/ssl
