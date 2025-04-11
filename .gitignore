@@ -19,4 +19,4 @@ aks/php-nginx/
 docker/mysql/mysql_data
 docker/gitlab/data
 docker/jenkins/jenkins_home
-k8s/helm/harbor/values-bak.yaml
+k8s/helm/harbor/values.yaml
